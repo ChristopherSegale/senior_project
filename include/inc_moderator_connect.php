@@ -4,5 +4,5 @@
   $password = "";
   $database = "anonymousboard";
 
-  $conn = @mysqli_connect($localhost, $username, $password);
+  $conn = @mysqli_connect($servername, $username, $password);
 ?>
