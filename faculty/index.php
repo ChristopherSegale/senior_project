@@ -11,4 +11,4 @@
       echo "<h2><a href=\"add_fac.php\"> Create Admin/Moderator</a></h2>\n";
     ?>
   </body>
-</html
+</html>
