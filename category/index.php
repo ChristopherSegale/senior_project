@@ -22,7 +22,7 @@
   </head>
   <body>
     <img src="/images/NetBoard_Logo.png" />
-    <h1>Category Page</h1>
+    <?php echo "<h1>" . $category . "</h1>\n"; ?>
     <hr />
     <?php
       date_default_timezone_set('America/New_York');
@@ -40,6 +40,18 @@
 	}
 
 	mysqli_close($conn);
+	?>
+	<h3>Insert New Thread</h3>
+	<form action="insert_thread.php" method="post">
+	  <p>
+	    Thread Title: <input type="text" name="title" /><br />
+	    Original Post Body: <br />
+	    <textarea rows="5" cols="80" name="op"></textarea>
+	  </p>
+	  <input type="hidden" name="cat" value="<?php echo "$cat_id"; ?>" />
+	  <input type="submit" name="insert_thread" value="Submit" />
+	</form>
+	<?php
       }
     ?>
   </body>
