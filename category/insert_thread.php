@@ -27,8 +27,9 @@
 	    @mysqli_query($conn, $thread_insert);
 	    $thread_row = @mysqli_query($conn, "SELECT id WHERE title = \"" . $_POST['title'] . "\"");
 	    $thread_id = @mysqli_fetch_row($thread_row)[0];
-	    $op_insert = "INSERT INTO post (content, created, thread_id) VALUES " .
-	                 "(\" . $_POST['op'] . "\", NOW(), " . $thread_id . ")";
+	    $op_insert = "INSERT INTO post (content, created, thread_id, ip_address) VALUES " .
+	                 "(\" . $_POST['op'] . "\", NOW(), " . $thread_id . ", \" . $_SERVER['REMOTE_ADDR'] . "\")";
+	    @mysqli_query($conn, $op_insert);
 	  }
 	}
 	mysqli_close($conn);
