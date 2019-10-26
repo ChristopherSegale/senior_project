@@ -31,16 +31,20 @@
         echo "<p>Category id must be supplied in the uri.</p>\n";
       }
       else if ($db_connect) {
-        echo "<hr />\n<h2>Threads</h2>\n<hr />\n";
+        echo "<hr />\n<h2>Threads</h2>\n";
 	mysqli_select_db($conn, $database);
-	$subjects = @mysqli_query($conn, "SELECT subject FROM thread WHERE category.id = " . $cat_id);
+	$SQL_string = "SELECT thread.subject, thread.id " .
+	              "FROM thread INNER JOIN category ON thread.category_id = category.id " . 
+		      "WHERE thread.category_id = " . $cat_id;
+	$subjects = @mysqli_query($conn, $SQL_string);
 
 	while ($row = mysqli_fetch_row($subjects)) {
-	  echo "<hr />\n<h3>" . $row . "</h3>\n";
+	  echo "<hr />\n<h3><a href=\"/thread/index.php/" . $row[1] . "\">" . $row[0] . "</a></h3>\n";
 	}
 
 	mysqli_close($conn);
 	?>
+	<hr />
 	<h3>Insert New Thread</h3>
 	<form action="/category/insert_thread.php" method="post">
 	  <p>
