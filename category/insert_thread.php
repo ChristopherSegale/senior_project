@@ -30,7 +30,12 @@
 	    $op_insert = "INSERT INTO post (content, created, thread_id, ip_address) VALUES " .
 	                 "(\" . $_POST['op'] . "\", NOW(), " . $thread_id . ", \" . $_SERVER['REMOTE_ADDR'] . "\")";
 	    @mysqli_query($conn, $op_insert);
+	    echo "<p>Thread <em>" . $_POST['op'] . "</em> has been inserted into the database.</p>\n" .
+	         "<p>Go to <a href=\"/thread/" . $thread_id . "\">your thread</a> to look at your submission.</p>\n";
 	  }
+	}
+	else {
+	  echo "<p>Thread submission form must be sent in order to insert thread.</p>\n";
 	}
 	mysqli_close($conn);
       }
