@@ -42,7 +42,7 @@
 	mysqli_close($conn);
 	?>
 	<h3>Insert New Thread</h3>
-	<form action="insert_thread.php" method="post">
+	<form action="/category/insert_thread.php" method="post">
 	  <p>
 	    Thread Title: <input type="text" name="title" /><br />
 	    Original Post Body: <br />
