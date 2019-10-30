@@ -51,6 +51,18 @@
 	    echo "\n</p>\n<hr />\n";
 	  }
 	}
+	mysqli_close($conn);
+	?>
+	<h3>Insert New Post</h3>
+	<form action="/thread/insert_post.php" method="post">
+	  <p>
+	    Post Body: <br />
+	    <textarea rows="5" cols="80" name="pb"></textarea>
+	  </p>
+	  <input type="hidden" name="tc" value="<?php echo $thread_id; ?>" />
+	  <input type="submit" name="insert_post" value="Submit" />
+	</form>
+	<?php
       }
       else {
         echo "<p>Could not connect to the database. Try again another time.</p>\n";
