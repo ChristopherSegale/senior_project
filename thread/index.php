@@ -60,6 +60,7 @@
 	    <textarea rows="5" cols="80" name="pb"></textarea>
 	  </p>
 	  <input type="hidden" name="tc" value="<?php echo $thread_id; ?>" />
+	  <input type="hidden" name="tt" value="<?php echo $thread; ?>" />
 	  <input type="submit" name="insert_post" value="Submit" />
 	</form>
 	<?php
