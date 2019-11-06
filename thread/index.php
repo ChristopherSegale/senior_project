@@ -7,14 +7,20 @@
       $db_connect = TRUE;
       $thread = "Placeholder Title";
       $thread_id = str_replace("/thread/index.php/", "", $_SERVER['REQUEST_URI']);
+      $cat_id = "";
+      $cat = "";
       if ($conn === FALSE) {
         $db_connect = FALSE;
       }
       if ($db_connect && strcmp($thread_id, "") !== 0) {
         mysqli_select_db($conn, $database);
-	$t_query = "SELECT subject FROM thread WHERE id = " . $thread_id;
+	$t_query = "SELECT subject, category_id FROM thread WHERE id = " . $thread_id;
 	$r = @mysqli_query($conn, $t_query);
-	$thread = mysqli_fetch_row($r)[0];
+	$t = mysqli_fetch_row($r);
+	$thread = $t[0];
+	$cat_id = $t[1];
+	$c = @mysqli_query($conn, "SELECT name FROM category WHERE id = " . $cat_id);
+	$cat = mysqli_fetch_row($c)[0];
       }
       echo "<title>" . $thread . "</title>\n";
     ?>
@@ -26,6 +32,7 @@
     <?php
       date_default_timezone_set('America/New_York');
       echo "<p>" . date('m/d/Y h:i:s a', time()) . "</p>\n";
+      echo "<a href=\"/\">Home</a> | <a href=\"/category/index.php/" . $cat_id . "\">" . $cat . "</a>\n";
       if (strcmp($thread_id, "") === 0) {
         echo "<p>Thread id must be supplied in the uri.</p>\n";
       }

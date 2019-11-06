@@ -27,6 +27,7 @@
     <?php
       date_default_timezone_set('America/New_York');
       echo "<p>" . date('m/d/Y h:i:s a', time()) . "</p>\n";
+      echo "<a href=\"/\">Home</a>\n";
       if (strcmp($cat_id, "") == 0) {
         echo "<p>Category id must be supplied in the uri.</p>\n";
       }
