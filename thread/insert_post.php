@@ -24,6 +24,15 @@
         return $ip;
       }
 
+      function tripcode($name)
+      {
+        $salt_file = "salt.txt";
+        $file = fopen($salt_file, "r");
+        $salt = fread($file, filesize($salt_file));
+        fclose($file);
+        return crypt($name, $salt);
+      }
+
       date_default_timezone_set('America/New_York');
       echo "<p>" . date('m/d/Y h:i:s a', time()) . "</p>\n";
       if ($conn === FALSE) {
@@ -41,8 +50,16 @@
 	else {
 	  $pb = mysqli_escape_string($conn, $_POST['pb']);
 	  $IP = get_ip();
-	  $SQL_string = "INSERT INTO post (content, created, thread_id, ip_address) VALUES " .
-	                "(\"" . $pb . "\", NOW(), " . $_POST['tc'] . ", \"" . $IP . "\")";
+	  $SQL_string = "";
+	  if (strcmp($_POST['trip'], "") === 0) {
+	    $SQL_string = "INSERT INTO post (content, created, thread_id, ip_address) VALUES " .
+	                  "(\"" . $pb . "\", NOW(), " . $_POST['tc'] . ", \"" . $IP . "\")";
+	  }
+	  else {
+	    $trip = mysqli_escape_string($conn, tripcode($_POST['trip']));
+	    $SQL_string = "INSERT INTO post (content, created, tripcode, thread_id, ip_address) VALUES " .
+	                  "(\"" . $pb . "\", NOW(), \"" . $trip . "\", " . $_POST['tc'] . ", \"" . $IP . "\")";
+	  }
 	  @mysqli_query($conn, $SQL_string);
 	  echo "<p>Post has been submitted to the <em>" . $_POST['tt'] . "</em> thread. <br />\n" .
 	       "Go <a href=\"/thread/index.php/" . $_POST['tc'] . "\">here</a> to return to thread.</p>\n";

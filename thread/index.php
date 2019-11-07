@@ -63,6 +63,7 @@
 	<h3>Insert New Post</h3>
 	<form action="/thread/insert_post.php" method="post">
 	  <p>
+	    Tripcode: <input type="text" name="trip" /> <br />
 	    Post Body: <br />
 	    <textarea rows="5" cols="80" name="pb"></textarea>
 	  </p>
