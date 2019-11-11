@@ -18,7 +18,6 @@
       else {
 	mysqli_select_db($conn, $database);
         $SQL_string = "UPDATE post SET flagged = 1 WHERE id = " . $_POST['pn'];
-	echo "<p>" . $SQL_string . "</p>\n";
 	mysqli_query($conn, $SQL_string);
 	echo "<p>Post number " . $_POST['pn'] . " has been flagged.</p>\n";
       }
