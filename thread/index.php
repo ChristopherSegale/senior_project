@@ -53,6 +53,13 @@
 	         $row[0] . "<br />\n" .
 		 $row[2] . "<br />\n" .
 	         $trip . "<br />\n";
+	    ?>
+	      <form action="/thread/flag.php" method="post">
+	        <input type="hidden" name="pn" value="<?php echo $row[0]; ?>" />
+		<input type="submit" value="flag" />
+	      </form>
+	    <br />
+	    <?php
 	    $pb = nl2br($row[4]);
 	    echo $pb;
 	    echo "\n</p>\n<hr />\n";
