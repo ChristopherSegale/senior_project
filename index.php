@@ -28,5 +28,7 @@
 	mysqli_close($conn);
       }
     ?>
+    <hr />
+    <p><a href="/faculty/index.php">Faculty Page</a></p>
   </body>
 </html>
