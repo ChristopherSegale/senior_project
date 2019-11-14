@@ -14,10 +14,10 @@
       }
       else {
         mysqli_select_db($conn, $database);
-	$SQL_string = "SELECT id FROM post WHERE flagged = 1";
+	$SQL_string = "SELECT id, thread_id FROM post WHERE flagged = 1";
 	$flagged = @mysqli_query($conn, $SQL_string);
 	while ($row = mysqli_fetch_row($flagged)) {
-	  echo "<p>" . $row[0] . "</p>\n<hr />\n";
+	  echo "<p><a href=\"/thread/index.php/" . $row[1] . "#" . $row[0] . "\">" . $row[0] . "</a></p>\n<hr />\n";
 	}
       }
     ?>

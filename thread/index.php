@@ -50,7 +50,7 @@
 	    }
 
 	    echo "<p>\n" .
-	         $row[0] . "<br />\n" .
+	         "<a name=\"" . $row[0] . "\">" . $row[0] . "</a><br />\n" .
 		 $row[2] . "<br />\n" .
 	         $trip . "<br />\n";
 	    ?>
