@@ -63,6 +63,7 @@
 	  @mysqli_query($conn, $SQL_string);
 	  echo "<p>Post has been submitted to the <em>" . $_POST['tt'] . "</em> thread. <br />\n" .
 	       "Go <a href=\"/thread/index.php/" . $_POST['tc'] . "\">here</a> to return to thread.</p>\n";
+	  header("location:/thread/index.php/" . $_POST['tc']);
 	}
       }
     ?>
