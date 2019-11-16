@@ -8,7 +8,22 @@
   <h1>Login check</h1>
   <hr />
     <?php
-      echo "<p>Successfully logged in.</p>\n";
+      include "inc_owner_connect.php";
+      if ($conn === FALSE) {
+        echo "<p>Could not connect to the database.</p>\n";
+      }
+      else {
+        mysqli_select_db($conn, $database);
+	$SQL_string = "SELECT password FROM admin_mods WHERE email = \"" . $_POST['email'] . "\"";
+	$p_query = @mysqli_query($conn, $SQL_string);
+	$hash = mysqli_fetch_row($p_query)[0];
+	if (password_verify($_POST['pass'], $hash)) {
+	  echo "<p>Logged in successfully.</p>\n";
+	}
+	else {
+	  echo "<p>Login unsuccessful.</p>\n";
+	}
+      }
     ?>
   </body>
 </html>
