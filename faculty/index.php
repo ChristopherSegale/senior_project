@@ -10,6 +10,7 @@
     <?php
       echo "<h2><a href=\"add_fac.php\">Create Admin/Moderator</a></h2>\n";
       echo "<h2><a href=\"flagged.php\">Show Flagged Posts</a></h2>\n";
+      echo "<h2><a href=\"/login\">Faculty Log in</a></h2>\n";
     ?>
   </body>
 </html>
