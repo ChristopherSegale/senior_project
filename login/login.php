@@ -30,8 +30,8 @@
 			"WHERE email = \"" . $_POST['email'] . "\"";
 	  $f_query = @mysqli_query($conn, $SQL_string);
 	  $fac = mysqli_fetch_row($f_query);
-	  setcookie("id", $fac[0], time() + 54000);
-	  setcookie("am", $fac[1], time() + 54000);
+	  setcookie("id", $fac[0], time() + 54000, "/");
+	  setcookie("am", $fac[1], time() + 54000, "/");
 	  echo "<p>Login successful.</p>\n";
 	  header("location:/faculty");
 	}

@@ -10,7 +10,12 @@
     <?php
       echo "<h2><a href=\"add_fac.php\">Create Admin/Moderator</a></h2>\n";
       echo "<h2><a href=\"flagged.php\">Show Flagged Posts</a></h2>\n";
-      echo "<h2><a href=\"/login\">Faculty Log in</a></h2>\n";
+      if (is_null($_COOKIE['id']) || is_null($_COOKIE['am'])) {
+        echo "<h2><a href=\"/login\">Faculty Log in</a></h2>\n";
+      }
+      else {
+        echo "<h2><a href=\"/faculty/logout.php\">Log out</a></h2>\n";
+      }
     ?>
   </body>
 </html>
