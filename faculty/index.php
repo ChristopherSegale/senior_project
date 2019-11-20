@@ -6,6 +6,7 @@
   <body>
     <img src="/images/NetBoard_Logo.png" />
     <h1>Faculty Page</h1>
+    <p><a href="/">Home</a></p>
     <hr />
     <?php
       echo "<h2><a href=\"add_fac.php\">Create Admin/Moderator</a></h2>\n";
