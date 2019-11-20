@@ -37,7 +37,7 @@
         echo "<p>Thread id must be supplied in the uri.</p>\n";
       }
       else if ($db_connect) {
-        $SQL_string = "SELECT post.id, post.tripcode, post.created, post.deleted, post.content " .
+        $SQL_string = "SELECT post.id, post.tripcode, post.created, post.deleted, post.content, post.ip_address " .
 	              "FROM post INNER JOIN thread ON post.thread_id = thread.id " .
 		      "WHERE post.thread_id = " . $thread_id;
         $tr = @mysqli_query($conn, $SQL_string);
@@ -49,8 +49,18 @@
 	      $trip = $row[1];
 	    }
 
+	    $ip = "";
+	    $del = "";
+	    if (isset($_COOKIE['am'])) {
+	      $ip = $row[5] . "<br />\n";
+	      $del = "<form action=\"/thread/delete.php\" method=\"post\"\n" .
+	             "<input type=\"hidden\" name=\"pn\" value=\"" . $row[0] . "\" />\n" .
+		     "<input type=\"submit\" value=\"Delete\" />\n" .
+		     "</form><br />\n";
+	    }
 	    echo "<p>\n" .
 	         "<a name=\"" . $row[0] . "\">" . $row[0] . "</a><br />\n" .
+		 $ip .
 		 $row[2] . "<br />\n" .
 	         $trip . "<br />\n";
 	    ?>
@@ -60,6 +70,7 @@
 	      </form>
 	    <br />
 	    <?php
+	    echo $del;
 	    $pb = nl2br($row[4]);
 	    echo $pb;
 	    echo "\n</p>\n<hr />\n";
@@ -70,7 +81,11 @@
 	<h3>Insert New Post</h3>
 	<form action="/thread/insert_post.php" method="post">
 	  <p>
-	    Tripcode: <input type="text" name="trip" /> <br />
+	    <?php
+	      if (is_null($_COOKIE['am'])) {
+	        echo "Tripcode: <input type=\"text\" name=\"trip\" /> <br />\n";
+              }
+	    ?>
 	    Post Body: <br />
 	    <textarea rows="5" cols="80" name="pb"></textarea>
 	  </p>

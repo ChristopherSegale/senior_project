@@ -51,9 +51,14 @@
 	  $pb = mysqli_escape_string($conn, $_POST['pb']);
 	  $IP = get_ip();
 	  $SQL_string = "";
-	  if (strcmp($_POST['trip'], "") === 0) {
+	  if (strcmp($_POST['trip'], "") === 0 && is_null($_COOKIE['am'])) {
 	    $SQL_string = "INSERT INTO post (content, created, thread_id, ip_address) VALUES " .
 	                  "(\"" . $pb . "\", NOW(), " . $_POST['tc'] . ", \"" . $IP . "\")";
+	  }
+	  else if (isset($_COOKIE['am'])) {
+	    $trip = $_COOKIE['am'];
+	    $SQL_string = "INSERT INTO post (content, created, tripcode, thread_id, ip_address) VALUES " .
+	                  "(\"" . $pb . "\", NOW(), \"" . $trip . "\", " . $_POST['tc'] . ", \"" . $IP . "\")";
 	  }
 	  else {
 	    $trip = mysqli_escape_string($conn, tripcode($_POST['trip']));
