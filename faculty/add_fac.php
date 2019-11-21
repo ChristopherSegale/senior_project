@@ -7,13 +7,19 @@
     <img src="/images/NetBoard_Logo.png" />
     <h1>Add a new Faculty Member</h1>
     <hr />
+    <p><a href="/">Home</a> | <a href="/faculty">Faculty Page</a></p>
     <?php
+      include "verify_fac.php";
       if (isset($_POST['inc_fac'])) {
         $email = $_POST['email'];
 	$pass = $_POST['pass'];
 	$aom = $_POST['aom'];
 
-	if (strcmp($email, "") === 0) {
+	if (!verify_admin($_COOKIE['id'])) {
+	  echo "<p>User must be logged in under an administrator account to add a faculty member.</p>\n" .
+	       "<p>Go <a href=\"/login\">here</a> to log in.</p>\n";
+	}
+	else if (strcmp($email, "") === 0) {
 	  echo "<p>Email field must be filled</p>\n" .
 	       "<p>Go <a href=\"add_fac.php\">back</a> to enter the value into the input field.</p>\n";
 	}
