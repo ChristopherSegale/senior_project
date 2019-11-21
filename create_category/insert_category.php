@@ -5,9 +5,16 @@
   </head>
   <body>
     <img src="/images/NetBoard_Logo.png" />
+    <p><a href="/">Home</a> | <a href="/faculty">Faculty Page</a></p>
+    <hr />
     <?php
+      include "verify_fac.php";
       if (isset($_POST['insert_category'])) {
-	if (strcmp($_POST['name'], "")  === 0|| strcmp($_POST['description'], "") === 0) {
+        if (is_null($_COOKIE['id']) || !verify_admin($_COOKIE['id'])) {
+	  echo "<p>User must be logged in under an administrator account to add a category.</p>\n" .
+	       "<p>Go <a href=\"/login\">back</a> to log in.</p>\n";
+	}
+	else if (strcmp($_POST['name'], "")  === 0 || strcmp($_POST['description'], "") === 0) {
 	  echo "<p>Form has not been fully submitted. Go back to the form creation " .
 	       "<a href=\"http://" . $_SERVER['HTTP_HOST'] . "/create_category/index.html\">" .
                "page</a> and fully enter all fields.</p>\n";
