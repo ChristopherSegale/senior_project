@@ -6,6 +6,7 @@
   <body>
   <img src="/images/NetBoard_Logo.png" />
   <h1>Login check</h1>
+  <p><a href="/">Home</a> | <a href="/faculty">Faculty Page</a></p>
   <hr />
     <?php
       include "inc_owner_connect.php";
