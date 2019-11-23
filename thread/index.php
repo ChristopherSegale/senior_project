@@ -55,6 +55,8 @@
 	      $ip = $row[5] . "<br />\n";
 	      $del = "<form action=\"/thread/delete.php\" method=\"post\">\n" .
 	             "<input type=\"hidden\" name=\"pn\" value=\"" . $row[0] . "\" />\n" .
+		     "<input type=\"hidden\" name=\"tn\" value=\"" . $thread_id . "\" />\n" .
+		     "<input type=\"hidden\" name=\"cn\" value=\"" . $cat_id . "\" />\n" .
 		     "<input type=\"submit\" value=\"Delete\" />\n" .
 		     "</form><br />\n";
 	    }
