@@ -34,7 +34,7 @@
 	    echo "<p>Post number must be provided to delete a post.</p>\n";
 	  }
 	  else {
-	    $SQL_string = "DELETE FROM post WHERE id = " . $_POST['pn'];
+	    $SQL_string = "UPDATE post SET deleted = 'true' WHERE id = " . $_POST['pn'];
 	    @mysqli_query($conn, $SQL_string);
 	    echo "<p>Post number " . $_POST['pn'] . " has been deleted.</p>\n";
 	  }
