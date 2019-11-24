@@ -9,6 +9,7 @@
     <hr />
     <?php
       include "inc_user_connect.php";
+      include "verify_fac.php";
 
       function get_ip() {
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -23,6 +24,15 @@
           $ip = $_SERVER['REMOTE_ADDR'];
         }
         return $ip;
+      }
+
+      function tripcode($name)
+      {
+        $salt_file = "/var/www/html/thread/salt.txt";
+        $file = fopen($salt_file, "r");
+        $salt = fread($file, filesize($salt_file));
+        fclose($file);
+        return crypt($name, $salt);
       }
 
       if ($conn === FALSE) {
@@ -42,6 +52,13 @@
 	  else {
 	    mysqli_select_db($conn, $database);
 	    $IP = get_ip();
+	    $trip = "";
+	    if (isset($_COOKIE['id']) && verify_mod($_COOKIE['id'])) {
+	      $trip = $_COOKIE['am'];
+	    }
+	    else if (strcmp($_POST['trip'], "") !== 0) {
+	      $trip = tripcode($_POST['trip']);
+	    }
 	    $thread_insert = "INSERT INTO thread (subject, created, category_id) VALUES " .
 	                     "(\"" . $_POST['title'] . "\", NOW(), " . $_POST['cat'] . ")";
 	    @mysqli_query($conn, $thread_insert);
@@ -49,14 +66,21 @@
 	    $thread_row = @mysqli_query($conn, $SQL_title);
 	    $thread_id = @mysqli_fetch_row($thread_row)[0];
 	    $op = mysqli_escape_string($conn, $_POST['op']);
-	    $op_insert = "INSERT INTO post (content, created, thread_id, ip_address) VALUES " .
-	                 "(\"" . $op . "\", NOW(), " . $thread_id . ", \"" . $IP . "\")";
+	    if (strcmp($trip, "") === 0) {
+	      $op_insert = "INSERT INTO post (content, created, thread_id, ip_address) VALUES " .
+	                   "(\"" . $op . "\", NOW(), " . $thread_id . ", \"" . $IP . "\")";
+	    }
+	    else {
+	      $op_insert = "INSERT INTO post (content, created, thread_id, ip_address, tripcode) VALUES " .
+	                   "(\"" . $op . "\", NOW(), " . $thread_id . ", \"" . $IP . "\", \"" . $trip . "\")";
+	    }
 	    @mysqli_query($conn, $op_insert);
 	    echo "<p>Thread <em>" . $_POST['title'] . "</em> has been inserted into the database.</p>\n" .
-	         "<p>Go to <a href=\"/thread/" . $thread_id . "\">your thread</a> to look at your submission.</p>\n";
+	         "<p>Go to <a href=\"/thread/index.php/" . $thread_id . "\">your thread</a> to look at your submission.</p>\n";
 	    /* Print SQL queries for debug purposes */
 	    //echo "<p>" . $SQL_title . "</p>\n";
 	    //echo "<p>" . $thread_insert . "</p>\n<p>" . $op_insert . "</p>\n";
+	    header("location:/thread/index.php/" . $thread_id);
 	  }
 	}
 	mysqli_close($conn);

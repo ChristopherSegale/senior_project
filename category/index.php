@@ -2,6 +2,7 @@
 <html>
   <head>
     <?php
+      include "verify_fac.php";
       $db_connect = TRUE;
       $category = "Category";
       $cat_id = str_replace("/category/index.php/", "", $_SERVER['REQUEST_URI']);
@@ -44,12 +45,17 @@
 	}
 
 	mysqli_close($conn);
+	$trip = "";
+	if (is_null($_COOKIE['id'])) {
+	  $trip = "Tripcode: <input type=\"text\" name=\"trip\" /><br />\n";
+	}
 	?>
 	<hr />
 	<h3>Insert New Thread</h3>
 	<form action="/category/insert_thread.php" method="post">
 	  <p>
 	    Thread Title: <input type="text" name="title" /><br />
+	    <?php echo $trip; ?>
 	    Original Post Body: <br />
 	    <textarea rows="5" cols="80" name="op"></textarea>
 	  </p>
