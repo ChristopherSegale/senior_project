@@ -3,6 +3,7 @@
   <head>
     <?php
       include "inc_user_connect.php";
+      include "verify_fac.php";
 
       $db_connect = TRUE;
       $thread = "Placeholder Title";
@@ -43,7 +44,7 @@
         $tr = @mysqli_query($conn, $SQL_string);
 
 	while ($row = mysqli_fetch_row($tr)) {
-	  if (strcmp($row[3], "false") === 0) {
+	  if ((isset($_COOKIE['id']) && verify_mod($_COOKIE['id'])) || strcmp($row[3], "false") === 0) {
 	    $trip = "Anonymous";
 	    if (!(is_null($row[1]))) {
 	      $trip = $row[1];
@@ -51,7 +52,7 @@
 
 	    $ip = "";
 	    $del = "";
-	    if (isset($_COOKIE['am'])) {
+	    if (isset($_COOKIE['am']) && strcmp($row[3], "false") === 0) {
 	      $ip = $row[5] . "<br />\n";
 	      $del = "<form action=\"/thread/delete.php\" method=\"post\">\n" .
 	             "<input type=\"hidden\" name=\"pn\" value=\"" . $row[0] . "\" />\n" .
@@ -59,6 +60,10 @@
 		     "<input type=\"hidden\" name=\"cn\" value=\"" . $cat_id . "\" />\n" .
 		     "<input type=\"submit\" value=\"Delete\" />\n" .
 		     "</form><br />\n";
+	    }
+	    else if (isset($_COOKIE['am']) && strcmp($row[3], "true") === 0) {
+	      $ip = $row[5] . "<br />\n";
+	      $del = "<strong>Deleted Post</strong><br /><br />\n";
 	    }
 	    echo "<p>\n" .
 	         "<a name=\"" . $row[0] . "\">" . $row[0] . "</a><br />\n" .
