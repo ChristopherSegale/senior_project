@@ -11,6 +11,7 @@
     <h2><a href="add_fac.php">Create Admin/Moderator</a></h2>
     <h2><a href="/create_category">Create Category</a></h2>
     <h2><a href="flagged.php">Show Flagged Posts</a></h2>
+    <h2><a href="ban.php">Ban an IP Address</a></h2>
     <?php
       if (is_null($_COOKIE['id']) || is_null($_COOKIE['am'])) {
         echo "<h2><a href=\"/login\">Faculty Log in</a></h2>\n";
