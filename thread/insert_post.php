@@ -9,6 +9,7 @@
     <hr />
     <?php
       include "inc_user_connect.php";
+      include "check_ban.php";
       function get_ip() {
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 	  //ip from share internet
@@ -44,7 +45,10 @@
       else {
         mysqli_select_db($conn, $database);
 
-	if (strcmp($_POST['pb'], "") === 0) {
+	if (is_banned(get_ip())) {
+	  echo "<p>The IP address associated with this device is banned from posting.</p>\n";
+	}
+	else if (strcmp($_POST['pb'], "") === 0) {
 	  echo "<p>Post body must be filled in order to insert post.</p>\n";
 	}
 	else {

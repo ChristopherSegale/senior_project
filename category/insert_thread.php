@@ -10,6 +10,7 @@
     <?php
       include "inc_user_connect.php";
       include "verify_fac.php";
+      include "check_ban.php";
 
       function get_ip() {
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -41,6 +42,9 @@
       else {
 	if (!isset($_POST['insert_thread'])) {
 	  echo "<p>Thread submission form must be sent in order to insert thread.</p>\n";
+	}
+	else if (is_banned(get_ip())) {
+	  echo "<p>The ip address associated with this device is banned from posting</p>\n";
 	}
         else {
 	  if (strcmp($_POST['title'], "") === 0) {
