@@ -3,6 +3,17 @@
   <head>
     <?php
       include "verify_fac.php";
+      function is_thread_del($c, $i) {
+        $del = FALSE;
+        $s = "SELECT deleted FROM post WHERE thread_id = " . $i;
+	$q = @mysqli_query($c, $s);
+	$r = mysqli_fetch_row($q)[0];
+	if (strcmp($r, "true") === 0) {
+	  $del = TRUE;
+	}
+	return $del;
+      }
+
       $db_connect = TRUE;
       $category = "Category";
       $cat_id = str_replace("/category/index.php/", "", $_SERVER['REQUEST_URI']);
@@ -41,7 +52,12 @@
 	$subjects = @mysqli_query($conn, $SQL_string);
 
 	while ($row = mysqli_fetch_row($subjects)) {
-	  echo "<hr />\n<h3><a href=\"/thread/index.php/" . $row[1] . "\">" . $row[0] . "</a></h3>\n";
+	  if (!is_thread_del($conn, $row[1])) {
+	    echo "<hr />\n<h3><a href=\"/thread/index.php/" . $row[1] . "\">" . $row[0] . "</a></h3>\n";
+	  }
+	  else if (is_thread_del($conn, $row[1]) && (isset($_COOKIE['id']) && verify_mod($_COOKIE['id']))) {
+	    echo "<hr />\n<h3><a href=\"/thread/index.php/" . $row[1] . "\">" . $row[0] . " (deleted)</a></h3>\n";
+	  }
 	}
 
 	mysqli_close($conn);
