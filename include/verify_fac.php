@@ -1,12 +1,14 @@
 <?php
   function verify_admin($i) {
     include "inc_owner_connect.php";
+    mysqli_select_db($conn, $database);
     $is_admin = TRUE;
     $f = "";
     $SQL_string = "SELECT admin_mods.admin_or_mod " .
                   "FROM logged_in INNER JOIN admin_mods USING(email) " .
 		  "WHERE logged_in.id = " . $i;
     $r = @mysqli_query($conn, $SQL_string);
+    echo "<p>" . mysqli_error($conn) . "</p>\n";
     if (mysqli_num_rows($r) === 0) {
       $is_admin = FALSE;
     }
@@ -22,6 +24,7 @@
 
   function verify_mod($i) {
     include "inc_owner_connect.php";
+    mysqli_select_db($conn, $database);
     $is_mod = TRUE;
     $f = "";
     $SQL_string = "SELECT admin_mods.admin_or_mod " .
