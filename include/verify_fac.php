@@ -8,7 +8,6 @@
                   "FROM logged_in INNER JOIN admin_mods USING(email) " .
 		  "WHERE logged_in.id = " . $i;
     $r = @mysqli_query($conn, $SQL_string);
-    echo "<p>" . mysqli_error($conn) . "</p>\n";
     if (mysqli_num_rows($r) === 0) {
       $is_admin = FALSE;
     }
