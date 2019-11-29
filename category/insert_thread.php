@@ -7,10 +7,12 @@
     <img src="/images/NetBoard_Logo.png" />
     <h1>Insert Thread</h1>
     <hr />
+    <p><a href="/">Home</a></p>
     <?php
       include "inc_user_connect.php";
       include "verify_fac.php";
       include "check_ban.php";
+      include "priv_cat.php";
 
       function get_ip() {
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -45,6 +47,9 @@
 	}
 	else if (is_banned(get_ip())) {
 	  echo "<p>The ip address associated with this device is banned from posting</p>\n";
+	}
+	else if (priv_cat($_POST['cat']) && (is_null($_COOKIE['id']) || !verify_admin($_COOKIE['id']))) {
+	  echo "<p>User must be an admin to make threads in this category.</p>\n";
 	}
         else {
 	  if (strcmp($_POST['title'], "") === 0) {
