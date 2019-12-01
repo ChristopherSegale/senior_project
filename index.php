@@ -20,7 +20,15 @@
 
       include "inc_user_connect.php";
       if ($conn === FALSE) {
-        echo "<p>Could not connect to the database. " . mysqli_error() . "</p>\n";
+	echo"<div class='container'  style ='background-color: lightgray; border-radius: 25px; '>";
+        echo"   <div class='row'>";
+        echo"           <div class='col-md-6' style='padding: 10px'> ";
+	echo "<br><p>Could not connect to the database. " . mysqli_error() . "</p>\n";
+      	echo"           </div>";
+        echo"   </div>";
+        echo"   <br>";
+        echo"   </div>";
+
       }
       else {
 	echo"<div class='container'  style ='background-color: lightgray; border-radius: 25px; '>";
