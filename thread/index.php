@@ -1,6 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
   <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css ">
+
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="styles/bootstrap/js/bootstrap.min.js"></script>
+
     <?php
       include "inc_user_connect.php";
       include "verify_fac.php";
@@ -26,14 +31,28 @@
       echo "<title>" . $thread . "</title>\n";
     ?>
   </head>
-  <body>
-    <img src="/images/NetBoard_Logo.png" />
-    <h1><?php echo $thread; ?></h1>
-    <hr />
+    <body style ="background-image: url('../../images/IndexBackground.png'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%">
+
+    <div class="jumbotron text-center" style = "background-color: transparent">
+        <img class="img-fluid" src="/images/NetBoard_Logo2.png" />
+    </div>
+
+	<div class="container"  style ='background-color: lightgray; border-radius: 25px; '>
+        <div class="row bg-dark text-white" style=" border-radius: 25px">
+            <div class="col-mdlg-8" style="padding: 5px"">
+		<?php    echo "<p> <a href=\"/\">Home</a> / <a href=\"/category/index.php/" . $cat_id . "\">" . $cat . "</a> / $thread <p>"; ?>
+			<?php
+                     	date_default_timezone_set('America/New_York');
+                        echo"<p>" . date('m/d/Y h:i:s a', time()) ." </p>";?>
+	    </div>
+        </div>
+<div class="row">
+           <div class="col-lg-8" style="padding: 10px"> 
     <?php
-      date_default_timezone_set('America/New_York');
-      echo "<p>" . date('m/d/Y h:i:s a', time()) . "</p>\n";
-      echo "<a href=\"/\">Home</a> | <a href=\"/category/index.php/" . $cat_id . "\">" . $cat . "</a>\n";
+
+     echo"<h1>". $thread. "</h1>";
+echo"</div> </div>";
+
       if (strcmp($thread_id, "") === 0) {
         echo "<p>Thread id must be supplied in the uri.</p>\n";
       }
@@ -65,22 +84,31 @@
 	      $ip = $row[5] . "<br />\n";
 	      $del = "<strong>Deleted Post</strong><br /><br />\n";
 	    }
-	    echo "<p>\n" .
-	         "<a name=\"" . $row[0] . "\">" . $row[0] . "</a><br />\n" .
-		 $ip .
-		 $row[2] . "<br />\n" .
-	         $trip . "<br />\n";
+
+	echo" <div class='row-center' style='border:1px solid black; border-radius: 15px; background-color: white; width: 100%; padding: 10px'>";
+
+	
+	echo"<p> Post: ".$row[0] . "</p>";
+	echo" <p> Date: " . $ip . $row[2] . "</p>";
+	echo"<p> User: ".$trip . "</p> <hr>";
+	 $pb = nl2br($row[4]);
+            echo $pb;	
+
+
+	
 	    ?>
+		<hr><br>
 	      <form action="/thread/flag.php" method="post">
 	        <input type="hidden" name="pn" value="<?php echo $row[0]; ?>" />
 		<input type="submit" value="flag" />
 	      </form>
-	    <br />
+	    <br >
 	    <?php
 	    echo $del;
-	    $pb = nl2br($row[4]);
-	    echo $pb;
-	    echo "\n</p>\n<hr />\n";
+	    echo"</div> <br>";
+
+
+
 	  }
 	}
 	mysqli_close($conn);
@@ -106,5 +134,10 @@
         echo "<p>Could not connect to the database. Try again another time.</p>\n";
       }
     ?>
+	<br>
+	</div>
+        </div> 
+        <br>
+         </div>
   </body>
 </html>
