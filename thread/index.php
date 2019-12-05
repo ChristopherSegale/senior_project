@@ -113,6 +113,15 @@ echo"</div> </div>";
 	}
 	mysqli_close($conn);
 	?>
+
+
+
+         <hr >
+	 <div class='row-center' style='border:1px solid black; border-radius: 15px; background-color: white; width: 100%; padding: 10px'>
+	 <button id="NewPostButton" onclick="ShowNewPostForm()">New Post</button>
+         <div id="NewPostForm" style="display:none; align-self: center; background: ">
+
+
 	<h3>Insert New Post</h3>
 	<form action="/thread/insert_post.php" method="post">
 	  <p>
@@ -128,6 +137,22 @@ echo"</div> </div>";
 	  <input type="hidden" name="tt" value="<?php echo $thread; ?>" />
 	  <input type="submit" name="insert_post" value="Submit" />
 	</form>
+
+	<br>
+	 
+	</form>
+
+</div>
+	</div>
+<script>
+                function ShowNewPostForm() {
+                    var x = document.getElementById("NewPostForm");
+                    x.style.display = "block";
+                     
+                    var y = document.getElementById("NewPostButton");
+                    y.style.display = "none";
+                }           
+            </script>
 	<?php
       }
       else {
