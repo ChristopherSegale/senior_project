@@ -43,15 +43,15 @@
 		<?php    echo "<p> <a href=\"/\">Home</a> / <a href=\"/category/index.php/" . $cat_id . "\">" . $cat . "</a> / $thread <p>"; ?>
 			<?php
                      	date_default_timezone_set('America/New_York');
-                        echo"<p>" . date('m/d/Y h:i:s a', time()) ." </p>";?>
+                        echo "<p>" . date('m/d/Y h:i:s a', time()) . " </p>";?>
 	    </div>
         </div>
 <div class="row">
            <div class="col-lg-8" style="padding: 10px"> 
     <?php
 
-     echo"<h1>". $thread. "</h1>";
-echo"</div> </div>";
+      echo "<h1>" . $thread . "</h1>\n";
+      echo "</div>\n</div>\n";
 
       if (strcmp($thread_id, "") === 0) {
         echo "<p>Thread id must be supplied in the uri.</p>\n";
@@ -85,27 +85,30 @@ echo"</div> </div>";
 	      $del = "<strong>Deleted Post</strong><br /><br />\n";
 	    }
 
-	echo" <div class='row-center' style='border:1px solid black; border-radius: 15px; background-color: white; width: 100%; padding: 10px'>";
+	echo " <div class='row-center' style='border:1px solid black; border-radius: 15px; background-color: white; width: 100%; padding: 10px'>\n";
 
 	
-	echo"<p> Post: ".$row[0] . "</p>";
-	echo" <p> Date: " . $ip . $row[2] . "</p>";
-	echo"<p> User: ".$trip . "</p> <hr>";
-	 $pb = nl2br($row[4]);
-            echo $pb;	
+	echo "<p> Post: ".$row[0] . "</p>\n";
+	if (strcmp ($ip, "") !== 0) {
+	  echo "<p> IP Address: " . $ip . "</p>\n";
+	}
+	echo "<p> Date: " . $row[2] . "</p>";
+	echo "<p> User: " . $trip . "</p>\n<hr>\n";
+	$pb = htmlentities($row[4], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        echo $pb;
 
 
 	
-	    ?>
-		<hr><br>
-	      <form action="/thread/flag.php" method="post">
-	        <input type="hidden" name="pn" value="<?php echo $row[0]; ?>" />
-		<input type="submit" value="flag" />
-	      </form>
-	    <br >
-	    <?php
-	    echo $del;
-	    echo"</div> <br>";
+	?>
+	<hr><br>
+	<form action="/thread/flag.php" method="post">
+	  <input type="hidden" name="pn" value="<?php echo $row[0]; ?>" />
+	  <input type="submit" value="flag" />
+	</form>
+	<br >
+	<?php
+	echo $del;
+	echo "</div>\n<br>\n";
 
 
 
