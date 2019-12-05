@@ -94,7 +94,7 @@
 	}
 	echo "<p> Date: " . $row[2] . "</p>";
 	echo "<p> User: " . $trip . "</p>\n<hr>\n";
-	$pb = htmlentities($row[4], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+	$pb = nl2br(htmlentities($row[4], ENT_QUOTES | ENT_HTML5, 'UTF-8'));
         echo $pb;
 
 
